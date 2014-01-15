@@ -304,10 +304,14 @@
 				if (e.touches.length == 1 && !itemWrap.is(":animated")) {			
 					var t = e.touches[0],
 						 deltaX = touch.x - t.clientX,
-						 deltaY = touch.y - t.clientY;
+						 deltaY = touch.y - t.clientY,
+						 absDeltaX = Math.abs(deltaX),
+						 absDeltaY = Math.abs(deltaY);
 	
-					self[vertical && deltaY > 0 || !vertical && deltaX > 0 ? 'next' : 'prev']();				
-					e.preventDefault();
+					if (vertical && absDeltaY > absDeltaX || !vertical && absDeltaX > absDeltaY) {
+						self[vertical && deltaY > 0 || !vertical && deltaX > 0 ? 'next' : 'prev']();				
+						e.preventDefault();
+					}
 				}
 			};
 		}
